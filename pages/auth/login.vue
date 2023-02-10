@@ -52,6 +52,7 @@ export default {
     async submitHandle() {
       this.isLoading = true;
       const isSuccess = await this._submit(this.form);
+      if (isSuccess) this.$router.push(this.$route.query.redirect || "/")
       this.isLoading = false;
     }
   }

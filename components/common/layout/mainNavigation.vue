@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer :value="showNav" app :permanent="!$isMobile" clipped @input="setShowNav($event)">
+  <v-navigation-drawer :value="showNav" app :permanent="!$isMobile" width="200" clipped @input="setShowNav($event)">
     <v-list nav dense>
 
       <user-card v-if="$isMobile"/>

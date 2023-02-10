@@ -24,6 +24,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    "@/assets/styles/global.scss"
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -58,6 +59,17 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
   ],
+
+  axios: {
+    proxy: true
+  },
+
+  proxy: {
+    "/api": {
+      target: process.env.BACKEND_URL,
+      pathRewrite: {"/api": "/admin/api/v1"}
+    }
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

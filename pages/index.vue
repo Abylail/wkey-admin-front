@@ -1,11 +1,7 @@
-<template>
-  <div>
-    test
-  </div>
-</template>
-
 <script>
 export default {
-  name: 'IndexPage'
+  middleware({ redirect }) {
+    redirect("/products");
+  }
 }
 </script>

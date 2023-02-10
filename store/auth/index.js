@@ -1,6 +1,6 @@
 export const state = () => ({
   // Информация пользователя
-  userInfo: {},
+  userInfo: null,
 
 })
 
@@ -10,6 +10,9 @@ export const getters = {
 
   // Роль пользователя
   getUserRole: state => state.userInfo?.role || null,
+
+  // Токен пользователя
+  getUserToken: state => state.userInfo?.token || null,
 
   // Авторизован ли пользователь
   isAuth: state => !!state.userInfo,
@@ -23,17 +26,42 @@ export const mutations = {
 
 export const actions = {
 
-  // Вход через username, password
+  // Вход через username, password (возвращает авторизован ли пользователь)
   login({ commit }, {username, password}) {
     return new Promise(resolve => {
-      commit("set", ["userInfo", {}]);
-      resolve(true);
+      this.$api.$post("/api/auth/login/credentials", {username, password})
+        .then(({err, body}) => {
+          if (!err) {
+            commit("set", ["userInfo", body]);
+            this.$cookies.set("token", body.token, {path: "/"});
+          }
+          resolve(!err);
+        })
     })
   },
 
-  // Вход через токен
-  tokenLogin({ commit, state }, token) {
+  // Вход через токен (возвращает авторизован ли пользователь)
+  tokenLogin({ commit, state, getters, dispatch }, token = getters.getUserToken) {
+    return new Promise(resolve => {
+      if (getters.isAuth) resolve(true);
+      const myToken = token || this.$cookies.get("token");
+      if (!myToken) return resolve(false);
+      this.$api.$post("/api/auth/login/token", {token: myToken})
+        .then(({err, body}) => {
+          if (err) dispatch("logout");
+          if (!err) {
+            commit("set", ["userInfo", body]);
+            this.$cookies.set("token", body.token, {path: "/"});
+          }
+          resolve(!err);
+        })
+    })
+  },
 
+  // Выйти
+  logout({ commit }) {
+    commit("set", ["userInfo", null]);
+    this.$cookies.remove("token");
   }
 
 }

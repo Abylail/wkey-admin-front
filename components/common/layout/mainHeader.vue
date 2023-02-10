@@ -1,14 +1,14 @@
 <template>
   <v-app-bar class="main-header" app clipped-left>
 
-    <v-app-bar-nav-icon dark v-if="mobile" @click="showNavHandle()"/>
+    <v-app-bar-nav-icon dark v-if="$isMobile" @click="showNavHandle()"/>
 
     <v-toolbar-title><img class="main-header__logo" :src="require('@/assets/images/logo-white.svg')"></v-toolbar-title>
 
     <v-spacer/>
 
     <div class="main-header__user-info">
-      <user-card v-if="!mobile" dark/>
+      <user-card v-if="!$isMobile" dark/>
     </div>
 
   </v-app-bar>
@@ -21,11 +21,6 @@ export default {
   name: "mainHeader",
   components: {UserCard},
   props: {
-    // Телефон ?
-    mobile: {
-      type: Boolean,
-      default: false
-    },
 
     // Показать ? (только для телефона)
     showNav: {

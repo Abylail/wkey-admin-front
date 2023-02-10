@@ -1,9 +1,9 @@
 <template>
-  <v-navigation-drawer :value="showNav" app :permanent="!mobile" clipped @input="setShowNav($event)">
+  <v-navigation-drawer :value="showNav" app :permanent="!$isMobile" clipped @input="setShowNav($event)">
     <v-list nav dense>
 
-      <user-card v-if="mobile"/>
-      <v-divider v-if="mobile" class="mb-3"/>
+      <user-card v-if="$isMobile"/>
+      <v-divider v-if="$isMobile" class="mb-3"/>
 
       <v-list-item v-for="item in routes" :key="item.route" link :to="item.route">
         <v-list-item-icon v-if="item.icon"><v-icon>{{ item.icon }}</v-icon></v-list-item-icon>
@@ -23,11 +23,6 @@ export default {
   name: "mainNavigation",
   components: {UserCard},
   props: {
-    // Телефон ?
-    mobile: {
-      type: Boolean,
-      default: false
-    },
 
     // Показать ? (только для телефона)
     showNav: {

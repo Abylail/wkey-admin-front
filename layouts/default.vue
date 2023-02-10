@@ -1,8 +1,8 @@
 <template>
   <v-app dark>
-    <main-header :show-nav.sync="showNav" :mobile="isMobile"/>
+    <main-header :show-nav.sync="showNav"/>
 
-    <main-navigation :show-nav.sync="showNav" :mobile="isMobile"/>
+    <main-navigation :show-nav.sync="showNav"/>
 
     <v-main app>
       <Nuxt/>
@@ -23,11 +23,5 @@ export default {
     // Показать навигацию
     showNav: false,
   }),
-  computed: {
-    // Телефон ?
-    isMobile() {
-      return window.innerWidth < 800;
-    }
-  }
 }
 </script>

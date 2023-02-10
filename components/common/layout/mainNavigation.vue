@@ -1,6 +1,9 @@
 <template>
-  <v-navigation-drawer app permanent clipped>
+  <v-navigation-drawer :value="showNav" app :permanent="!mobile" clipped @input="setShowNav($event)">
     <v-list nav dense>
+
+      <user-card v-if="mobile"/>
+      <v-divider v-if="mobile" class="mb-3"/>
 
       <v-list-item v-for="item in routes" :key="item.route" link :to="item.route">
         <v-list-item-icon v-if="item.icon"><v-icon>{{ item.icon }}</v-icon></v-list-item-icon>
@@ -14,14 +17,36 @@
 </template>
 
 <script>
+import UserCard from "~/components/common/layout/userCard.vue";
+
 export default {
   name: "mainNavigation",
+  components: {UserCard},
+  props: {
+    // Телефон ?
+    mobile: {
+      type: Boolean,
+      default: false
+    },
+
+    // Показать ? (только для телефона)
+    showNav: {
+      type: Boolean,
+      default: false
+    }
+  },
   data: () => ({
     routes: [
       { title: "Продукты", description: "" , icon: "",  route: "/products" },
       { title: "Клиенты", description: "" , icon: "",  route: "/clients" },
     ]
-  })
+  }),
+  methods: {
+    // Задать показывать ли
+    setShowNav(show) {
+      this.$emit("update:showNav", show);
+    }
+  }
 }
 </script>
 

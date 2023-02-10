@@ -1,25 +1,45 @@
 <template>
   <v-app-bar class="main-header" app clipped-left>
 
+    <v-app-bar-nav-icon dark v-if="mobile" @click="showNavHandle()"/>
+
     <v-toolbar-title><img class="main-header__logo" :src="require('@/assets/images/logo-white.svg')"></v-toolbar-title>
 
     <v-spacer/>
 
     <div class="main-header__user-info">
-      <v-list-item two-line dark>
-        <v-list-item-content>
-          <v-list-item-title>Менеджер wkey</v-list-item-title>
-          <v-list-item-subtitle>Базарбаев Абылай</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
+      <user-card v-if="!mobile" dark/>
     </div>
 
   </v-app-bar>
 </template>
 
 <script>
+import UserCard from "~/components/common/layout/userCard.vue";
+
 export default {
-  name: "mainHeader"
+  name: "mainHeader",
+  components: {UserCard},
+  props: {
+    // Телефон ?
+    mobile: {
+      type: Boolean,
+      default: false
+    },
+
+    // Показать ? (только для телефона)
+    showNav: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+
+    // Показать навигацию
+    showNavHandle() {
+      this.$emit("update:showNav", !this.showNav);
+    }
+  }
 }
 </script>
 
@@ -30,7 +50,7 @@ export default {
 
   &__logo {
     display: block;
-    height: 25px;
+    height: 20px;
     margin: auto 0;
   }
 

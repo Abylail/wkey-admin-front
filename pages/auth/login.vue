@@ -1,7 +1,7 @@
 <template>
   <div class="login-page">
 
-    <v-card class="login-page__card" dark>
+    <v-card class="login-page__card" dark @keyup.enter="submitHandle()">
       <v-card-title>Вход</v-card-title>
 
       <v-card-text>
@@ -50,6 +50,7 @@ export default {
 
     // Войти
     async submitHandle() {
+      if (!this.canSubmit) return;
       this.isLoading = true;
       const isSuccess = await this._submit(this.form);
       if (isSuccess) this.$router.push(this.$route.query.redirect || "/")

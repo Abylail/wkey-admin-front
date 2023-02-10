@@ -1,6 +1,6 @@
 export const state = () => ({
   // Информация пользователя
-  userInfo: null,
+  userInfo: {},
 
 })
 

@@ -25,6 +25,14 @@
       />
     </div>
 
+    <v-pagination
+      class="products__pagination"
+      :value="page"
+      total-visible="10"
+      :length="count"
+      @input="selectPage($event)"
+    />
+
   </div>
 </template>
 
@@ -61,11 +69,18 @@ export default {
 
     // Выбор страницы
     selectPage(page) {
+      this.$router.replace({query: {...this.$route.query, page}})
       this.page = page;
       this.searchProducts();
     },
+
+    // Инициализировать данные поиска
+    initSearchData() {
+      if (this.$route.query.page) this.page = parseInt(this.$route.query.page);
+    },
   },
   mounted() {
+    this.initSearchData();
     this.fetchCategories();
     this.searchProducts();
   }

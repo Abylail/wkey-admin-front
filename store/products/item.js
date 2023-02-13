@@ -17,7 +17,7 @@ export const mutations = {
 export const actions = {
   // Получить информацию о продукте
   async fetchProductInfo({ state, commit }, productId) {
-    if (state.id === productId) return;
+    if (state.info?.id === productId) return;
     await this.$api.$get(`/api/stock/product/get/${productId}`)
       .then(({err, body}) => {
         if (!err) commit("set", ["info", body]);

@@ -5,23 +5,32 @@
 
     <div class="product-info__content">
 
-      <div class="product-info__detail">
-        <div class="product-info__detail-title">Название:</div>
-        <div>{{ info.title }}</div>
+      <detail title="Название" block>{{ info.title }}</detail>
+
+      <detail title="Бренд" block>{{ info.brand_title }}</detail>
+
+      <!-- Поля в ряд -->
+      <div class="product-info__columns">
+        <detail title="Цена">{{ info.price }}тг</detail>
+        <detail title="Артикул">{{ info.vendor_code }}</detail>
+        <detail title="Колличетсво">{{ info.count }}</detail>
       </div>
 
-      <div class="product-info__columns">
+      <v-divider class="mt-4 mb-4"/>
 
-        <div class="product-info__detail">
-          <div class="product-info__detail-title">Цена:</div>
-          <div>{{ info.price }}</div>
-        </div>
-
-        <div class="product-info__detail">
-          <div class="product-info__detail-title">Артикул:</div>
-          <div>{{ info.vendor_code }}</div>
-        </div>
-
+      <div :class="{'product-info__double-column': !$isMobile}">
+        <v-textarea
+          v-model="info.description_ru"
+          label="Описание на русском"
+          rows="2"
+          outlined dense no-resize auto-grow
+        />
+        <v-textarea
+          v-model="info.description_kz"
+          label="Описание на казахском"
+          rows="2"
+          outlined dense no-resize auto-grow
+        />
       </div>
 
     </div>
@@ -31,20 +40,24 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import Detail from "~/components/common/details/detail";
 
 export default {
   name: "index",
+  components: {Detail},
   data: () => ({
     isLoading: true,
+
+    info: {},
   }),
   computed: {
     ...mapGetters({
-      info: "products/item/getInfo",
+      _info: "products/item/getInfo",
     }),
 
     // id продукта
     productId() {
-      return this.$route.params.productId;
+      return parseInt(this.$route.params.productId);
     }
   },
   methods: {
@@ -56,6 +69,7 @@ export default {
     async fetchProductInfo() {
       this.isLoading = true;
       await this._fetchProductInfo(this.productId);
+      this.info = JSON.parse(JSON.stringify(this._info))
       this.isLoading = false;
     },
   },
@@ -73,21 +87,19 @@ export default {
     margin-top: 10px;
   }
 
-  &__detail {
-    margin-top: 10px;
-  }
-
-  &__detail-title {
-    color: #575757;
-    font-size: 14px;
-  }
-
   &__columns {
 
      & > * {
        display: inline-block;
        margin-right: 10px;
      }
+  }
+
+  &__double-column {
+    display: grid;
+    grid-column-gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1000px;
   }
 
 }

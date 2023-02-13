@@ -2,15 +2,16 @@
   <div class="products">
 
     <!-- Поиск -->
-    <v-card class="products__card">
+    <v-card class="products__card" @keyup.enter="searchProducts()">
       <v-card-text>
-        <v-text-field label="Поиск по названию" outlined dense hide-details/>
-        <v-btn class="products__search-submit" dark small>Поиск</v-btn>
+        <v-text-field label="Поиск по названию" v-model="filter.query" outlined dense hide-details/>
+        <v-btn class="products__search-submit" dark small @click="searchProducts()">Поиск</v-btn>
       </v-card-text>
     </v-card>
 
     <v-pagination
       class="products__pagination"
+      v-if="count"
       :value="page"
       total-visible="10"
       :length="count"
@@ -27,6 +28,7 @@
 
     <v-pagination
       class="products__pagination"
+      v-if="count"
       :value="page"
       total-visible="10"
       :length="count"
@@ -47,6 +49,10 @@ export default {
     isLoading: true,
 
     page: 1,
+
+    filter: {
+      query: "", // Название
+    },
   }),
   computed: {
     ...mapGetters({
@@ -61,28 +67,30 @@ export default {
     }),
 
     // Поиск продуктов
-    async searchProducts() {
+    async searchProducts(page = 1) {
       this.isLoading = true;
-      await this._searchProducts({ page: this.page });
+      this.page = page;
+      this.$router.replace({query: {...this.filter, page}});
+      await this._searchProducts({ page: this.page, ...this.filter });
       this.isLoading = false;
     },
 
     // Выбор страницы
     selectPage(page) {
-      this.$router.replace({query: {...this.$route.query, page}})
-      this.page = page;
-      this.searchProducts();
+      this.$router.replace({query: {...this.$route.query, page}});
+      this.searchProducts(page);
     },
 
     // Инициализировать данные поиска
     initSearchData() {
       if (this.$route.query.page) this.page = parseInt(this.$route.query.page);
+      if (this.$route.query.query) this.filter.query = this.$route.query.page;
     },
   },
   mounted() {
     this.initSearchData();
     this.fetchCategories();
-    this.searchProducts();
+    this.searchProducts(this.page);
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <div class="product-item__image"/>
     <div class="product-item__info">
       <div class="product-item__title">{{ info.title }}</div>
-      <div class="product-item__subtitle">{{ info.category_name }}</div>
+      <div class="product-item__subtitle">{{ info.brand_title }}</div>
       <div class="product-item__price-count">
         <span class="product-item__count">{{ info.count }}шт</span>
         <span class="product-item__price" v-if="info.price">{{ info.price }}тг</span>
@@ -58,7 +58,7 @@ export default {
 
   &__image {
     $image-size: 60px;
-    background: #c4c4c4;
+    background: $color--gray-light;
     height: $image-size;
     width: $image-size;
     min-width: $image-size;

@@ -4,7 +4,7 @@
     <v-card class="clients__card">
       <v-card-text>
         <v-text-field label="Поиск по номеру" outlined dense hide-details/>
-        <v-btn class="clients__search-submit" dark>Поиск</v-btn>
+        <v-btn class="clients__search-submit" small dark>Поиск</v-btn>
       </v-card-text>
     </v-card>
 
@@ -12,8 +12,10 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
-  name: "index"
+  name: "index",
 }
 </script>
 
@@ -26,7 +28,7 @@ export default {
   }
 
   &__search-submit {
-    margin-top: 16px;
+    margin-top: 8px;
     background-color: $color_-purple-dark !important;
   }
 

@@ -33,6 +33,8 @@
         />
       </div>
 
+      <v-btn color="blue" dark small @click="saveInfoHandle()">Сохранить описание</v-btn>
+
     </div>
 
   </div>
@@ -63,6 +65,7 @@ export default {
   methods: {
     ...mapActions({
       _fetchProductInfo: "products/item/fetchProductInfo",
+      _saveProductInfo: "products/item/saveProductInfo",
     }),
 
     // Получить информацию о продукте
@@ -70,6 +73,29 @@ export default {
       this.isLoading = true;
       await this._fetchProductInfo(this.productId);
       this.info = JSON.parse(JSON.stringify(this._info))
+      this.isLoading = false;
+    },
+
+    // Валидация информации
+    infoValidate() {
+      if (!this.info.description_ru) {
+        this.$toast.warning("Введите описание на русском");
+        return false;
+      }
+
+      if (!this.info.description_kz) {
+        this.$toast.warning("Введите описание на казахском");
+        return false;
+      }
+
+      return true;
+    },
+
+    // Сохранить изменяемую информацию
+    async saveInfoHandle() {
+      if (!this.infoValidate()) return;
+      this.isLoading = true;
+      await this._saveProductInfo({info: this.info, productId: this.productId});
       this.isLoading = false;
     },
   },

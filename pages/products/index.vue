@@ -4,7 +4,7 @@
     <!-- Поиск -->
     <v-card class="products__card" @keyup.enter="searchProducts()">
       <v-card-text>
-        <v-text-field label="Поиск по названию" v-model="filter.query" outlined dense hide-details/>
+        <v-text-field label="Поиск по названию" v-model="filter.query" outlined dense hide-details clearable/>
         <v-btn class="products__search-submit" dark small @click="searchProducts()">Поиск</v-btn>
       </v-card-text>
     </v-card>
@@ -84,7 +84,7 @@ export default {
     // Инициализировать данные поиска
     initSearchData() {
       if (this.$route.query.page) this.page = parseInt(this.$route.query.page);
-      if (this.$route.query.query) this.filter.query = this.$route.query.page;
+      if (this.$route.query.query) this.filter.query = this.$route.query.query;
     },
   },
   mounted() {

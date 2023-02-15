@@ -27,5 +27,13 @@ export const actions = {
   // Перенос информации о продукте
   bridgeInfo({ commit }, info) {
     commit("set", ["info", info]);
+  },
+
+  // Сохранить информацию о продукте
+  async saveProductInfo({ state }, {info, productId}) {
+    await this.$api.$put(`/api/stock/product/update/${productId}`, info)
+      .then(({err}) => {
+        if (!err) this.$toast.success("Продукт обновлен");
+      })
   }
 }

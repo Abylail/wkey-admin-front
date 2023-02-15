@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchCategories: "products/categories/fetchCategories",
+      fetchCategories: "categories/fetchCategories",
       _searchProducts: "products/searchProducts",
     }),
 

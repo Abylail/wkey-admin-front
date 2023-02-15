@@ -4,8 +4,7 @@
     <!-- Поиск -->
     <v-card class="brands__card">
       <v-card-text>
-        <v-text-field label="Поиск по названию" outlined dense hide-details/>
-        <v-btn class="brands__search-submit" dark small>Поиск</v-btn>
+        <v-text-field label="Поиск по названию" v-model="searchText" outlined dense hide-details clearable/>
       </v-card-text>
     </v-card>
 
@@ -28,11 +27,18 @@ export default {
   components: {BrandItem},
   data: () => ({
     isLoading: true,
+
+    searchText: null,
   }),
   computed: {
     ...mapGetters({
-      brands: "brands/getList",
-    })
+      _brands: "brands/getList",
+    }),
+
+    brands() {
+      if (!this.searchText) return this._brands;
+      return this._brands.filter(({title}) => title.toLowerCase().includes(this.searchText.toLowerCase()));
+    }
   },
   methods: {
     ...mapActions({

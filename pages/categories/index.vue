@@ -5,7 +5,7 @@
     <v-card class="categories__card">
       <v-card-text>
         <v-text-field label="Поиск по названию" v-model="searchText" outlined dense hide-details clearable/>
-        <v-btn class="categories__add-button" color="blue" right small outlined @click="$router.push('/categories/categoryedit')">Добавить <v-icon>mdi-plus</v-icon></v-btn>
+        <v-btn class="categories__add-button" color="blue" right small outlined @click="$router.push('/categories/categoryedit/new')">Добавить <v-icon>mdi-plus</v-icon></v-btn>
       </v-card-text>
     </v-card>
 

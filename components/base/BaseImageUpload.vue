@@ -2,8 +2,13 @@
   <div class="image-upload">
 
     <div class="image-upload__list">
-      <div class="image-upload__item" v-for="(image, index) in myValue" :key="index" :style="{backgroundImage: `url(${image})`}"/>
-      <div class="image-upload__item image-upload__label" @click="triggerInput()">
+      <div class="image-upload__item image-upload__label"
+           v-for="(image, index) in myValue" :key="index"
+           :style="{backgroundImage: `url(${image})`}"
+           @click="triggerInput(index)"
+      />
+
+      <div class="image-upload__item image-upload__label" v-if="maxCount > myValue.length" @click="triggerInput(myValue.length)">
         <v-icon>mdi-camera</v-icon>
       </div>
     </div>
@@ -29,7 +34,14 @@ export default {
       type: Number,
       default: null
     },
+    maxCount: {
+      type: Number,
+      default: 1,
+    }
   },
+  data: () => ({
+    imageIndexForChange: 0,
+  }),
   computed: {
     myValue() {
       if (!this.value) return [];
@@ -38,7 +50,8 @@ export default {
   },
   methods: {
 
-    triggerInput() {
+    triggerInput(index = 0) {
+      this.imageIndexForChange = index;
       this.$refs.input.value = "";
       this.$refs.input.click();
     },
@@ -49,7 +62,8 @@ export default {
       const optimizedBase64 = await optimizeBase64(rawBase64, this.optimizeWidth, this.optimizeHeight);
       this.$emit("input", {
         name: file.name,
-        buffer: optimizedBase64.split(",")[1]
+        buffer: optimizedBase64.split(",")[1],
+        position: this.imageIndexForChange + 1,
       })
     }
   }

@@ -5,6 +5,8 @@
 
     <div class="sub-edit__content">
 
+      <div class="sub-edit__title">Подкатегория</div>
+
       <div :class="{'sub-edit__double-column': !$isMobile}">
         <v-text-field
           v-model="info.title_ru"
@@ -24,6 +26,10 @@
 
       <base-image-upload v-if="subcategoryCode" :value="imageUrl" @input="imageUpload($event)"/>
 
+      <v-divider class="mt-2 mb-2"/>
+
+      <v-btn v-if="categoryCode" color="red" small outlined @click="deleteHandle()">Удалить подкатегорию</v-btn>
+
       <v-divider class="mt-4 mb-4"/>
 
       <div class="sub-edit__subtitle" v-if="subcategoryCode">Продукты</div>
@@ -40,7 +46,6 @@
 import BaseImageUpload from "~/components/base/BaseImageUpload";
 import {mapActions, mapGetters} from "vuex";
 export default {
-  name: "_subcode",
   components: {BaseImageUpload},
   data: () => ({
     info: {},
@@ -73,6 +78,7 @@ export default {
       _updateSubcategoryInfo: "categories/subcategory/item/updateCategoryInfo",
       _fetchSubcategoryInfo: "categories/subcategory/item/fetchSubcategory",
       _imageUpload: "categories/subcategory/item/imageUpload",
+      _deleteSubcategory: "categories/subcategory/item/deleteSubcategory",
     }),
 
     // Запросить категорию
@@ -116,6 +122,24 @@ export default {
       else this.$toast.error("Ошибка при загрузке картинки");
       this.isLoading = false;
     },
+
+    // Удалить (кнопка)
+    deleteHandle() {
+      this.$confirm({
+        title: 'Вы уверены что хотите удалить подкатегорию?',
+        message: 'Восстановить подкатегорию будет невозможно',
+        button: {yes: 'Удалить', no: 'Отмена'},
+        callback: async confirm => {
+          if (!confirm) return;
+          const isSuccess = await this._deleteSubcategory({categoryCode: this.categoryCode, subcategoryCode: this.subcategoryCode});
+          if (isSuccess) {
+            this.$toast.success("Податегория удаленна")
+            this.$router.push(`/categories/categoryedit/${this.categoryCode}`);
+          }
+          else this.$toast.error("Ошибка при удалении")
+        }
+      })
+    },
   },
   mounted() {
     if (this.subcategoryCode) this.fetchSubcategoryInfo();
@@ -126,6 +150,11 @@ export default {
 <style lang="scss" scoped>
 .sub-edit {
   padding: 16px;
+
+  &__title {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
 
   &__double-column {
     display: grid;

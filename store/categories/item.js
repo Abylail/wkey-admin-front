@@ -54,5 +54,15 @@ export const actions = {
           else resolve(null);
         })
     })
+  },
+
+  // Удалить категорию -> возвращает успешно ли
+  deleteCategory({}, categoryCode) {
+    return new Promise(resolve => {
+      this.$api.$delete(`/api/stock/category/delete/${categoryCode}`)
+        .then(({err}) => {
+          resolve(!err);
+        })
+    })
   }
 }

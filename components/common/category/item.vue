@@ -1,5 +1,5 @@
 <template>
-  <v-card class="category-item" :class="{'category-item--mobile': $isMobile}" link @click="goEdit()">
+  <v-card class="category-item" :class="{'category-item--mobile': $isMobile}" link @click="clickHandle()">
     <div class="category-item__image" v-if="info.image" :style="{backgroundImage: `url(${imageUrl})`}"/>
     <div class="category-item__info">
       {{ info.title_ru || info.title_ru }}
@@ -24,8 +24,9 @@ export default {
   },
   methods: {
     // Перейти в редактирование категории
-    goEdit() {
+    clickHandle() {
       this.$emit("go");
+      this.$emit("click");
     }
   }
 }

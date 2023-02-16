@@ -5,6 +5,8 @@
 
     <div class="category-edit__content">
 
+      <div class="category-edit__title">Категория</div>
+
       <div :class="{'category-edit__double-column': !$isMobile}">
         <v-text-field
           v-model="info.title_ru"
@@ -23,6 +25,10 @@
       <v-divider class="mt-2 mb-2"/>
 
       <base-image-upload v-if="categoryCode" :value="imageUrl" @input="imageUpload($event)"/>
+
+      <v-divider class="mt-2 mb-2"/>
+
+      <v-btn v-if="categoryCode" color="red" small outlined @click="deleteHandle()">Удалить категорию</v-btn>
 
       <v-divider class="mt-4 mb-4"/>
 
@@ -61,6 +67,7 @@ export default {
 
     // Код категории
     categoryCode() {
+      if (this.$route.params?.code === "new") return null;
       return this.$route.params?.code;
     },
 
@@ -80,6 +87,7 @@ export default {
       _updateCategoryInfo: "categories/item/updateCategoryInfo",
       _fetchCategoryInfo: "categories/item/fetchCategory",
       _imageUpload: "categories/item/imageUpload",
+      _deleteCategory: "categories/item/deleteCategory",
     }),
 
     // Сохранить (кнопка)
@@ -123,6 +131,25 @@ export default {
       else this.$toast.error("Ошибка при загрузке картинки");
       this.isLoading = false;
     },
+
+    // Удалить (кнопка)
+    deleteHandle() {
+      this.$confirm({
+        title: 'Вы уверены что хотите удалить категорию?',
+        message: 'Восстановить категорию будет невозможно',
+        button: {yes: 'Удалить', no: 'Отмена'},
+        callback: async confirm => {
+          if (!confirm) return;
+          const isSuccess = await this._deleteCategory(this.categoryCode);
+          if (isSuccess) {
+            this.$toast.success("Категория удаленна")
+            this.$router.push("/categories");
+          }
+          else this.$toast.error("Ошибка при удалении")
+        }
+      })
+    },
+
   },
   mounted() {
     if (this.categoryCode) this.fetchCategoryInfo();
@@ -133,6 +160,11 @@ export default {
 <style lang="scss" scoped>
 .category-edit {
   padding: 16px;
+
+  &__title {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
 
   &__double-column {
     display: grid;

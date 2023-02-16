@@ -8,6 +8,8 @@
       <Nuxt/>
     </v-main>
 
+    <vue-confirm-dialog/>
+
   </v-app>
 </template>
 
@@ -15,10 +17,12 @@
 import MainHeader from "~/components/common/layout/mainHeader.vue";
 import MainNavigation from "~/components/common/layout/mainNavigation.vue";
 
+import {default as VueConfirmDialog} from "vue-confirm-dialog/src/vue-confirm-dialog";
+
 export default {
   name: 'DefaultLayout',
   middleware: "auth",
-  components: {MainNavigation, MainHeader},
+  components: {MainNavigation, MainHeader, VueConfirmDialog},
   data: () => ({
     // Показать навигацию
     showNav: false,

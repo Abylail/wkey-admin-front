@@ -54,5 +54,35 @@ export const actions = {
           else resolve(null);
         })
     })
-  }
+  },
+
+  // Удалить категорию -> возвращает успешно ли
+  deleteSubcategory({}, {categoryCode, subcategoryCode}) {
+    return new Promise(resolve => {
+      this.$api.$delete(`/api/stock/category/${categoryCode}/sub/delete/${subcategoryCode}`)
+        .then(({err}) => {
+          resolve(!err);
+        })
+    })
+  },
+
+  // Привязать продукты к подкатегории
+  bindProducts({}, {categoryCode, subcategoryCode, productIds}) {
+    return new Promise(resolve => {
+      this.$api.$post(`/api/stock/category/${categoryCode}/sub/bind/${subcategoryCode}`, {list: productIds})
+        .then(({err}) => {
+          resolve(!err);
+        })
+    })
+  },
+
+  // Отвязать продукты к подкатегории
+  unbindProducts({}, {categoryCode, subcategoryCode, productId}) {
+    return new Promise(resolve => {
+      this.$api.$post(`/api/stock/category/${categoryCode}/sub/unbind/${subcategoryCode}/product/${productId}`)
+        .then(({err}) => {
+          resolve(!err);
+        })
+    })
+  },
 }

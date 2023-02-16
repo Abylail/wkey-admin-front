@@ -7,7 +7,7 @@ const createCatcher = (store, $toast) => {
     const errorResponse = error.response;
     if (!errorResponse) return;
     const message = errorResponse.data?.message;
-    $toast.error(`${message} \n (${moment().format("DD.MM.yyyy hh:mm")})`);
+    $toast.error(`${message} \n (${error.response.config.url})`);
   }
 }
 

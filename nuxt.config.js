@@ -44,6 +44,10 @@ export default {
     scss: ["~/assets/styles/variables.scss"]
   },
 
+  server: {
+    port: 3001
+  },
+
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/vuetify

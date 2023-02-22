@@ -17,7 +17,7 @@ const createConfig = (conf = {}, store) => {
   if (!nextConfig.headers) nextConfig.headers = {};
 
   // console.log(store.getters["services/auth/getUsername"]);debugger
-  // if (store.getters["services/auth/getUsername"]) nextConfig.headers.login = store.getters["services/auth/getUsername"]
+  if (store.getters["auth/isAuth"]) nextConfig.headers.token = store.getters["auth/getUserToken"]
 
   return nextConfig;
 }

@@ -18,7 +18,7 @@ export const actions = {
 
   // Запросить категории
   async fetchCategories({commit}) {
-    await this.$api.$get("/api/stock/category/get")
+    await this.$api.$get("/admin-api/stock/category/get")
       .then(({err, body}) => {
         if (!err) commit("set", ["list", body]);
       })

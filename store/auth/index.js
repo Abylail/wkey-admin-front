@@ -29,7 +29,7 @@ export const actions = {
   // Вход через username, password (возвращает авторизован ли пользователь)
   login({ commit }, {username, password}) {
     return new Promise(resolve => {
-      this.$api.$post("/api/auth/login/credentials", {username, password})
+      this.$api.$post("/admin-api/auth/login/credentials", {username, password})
         .then(({err, body}) => {
           if (!err) {
             commit("set", ["userInfo", body]);
@@ -46,7 +46,7 @@ export const actions = {
       if (getters.isAuth) resolve(true);
       const myToken = token || this.$cookies.get("token");
       if (!myToken) return resolve(false);
-      this.$api.$post("/api/auth/login/token", {token: myToken})
+      this.$api.$post("/admin-api/auth/login/token", {token: myToken})
         .then(({err, body}) => {
           if (err) dispatch("logout");
           if (!err) {

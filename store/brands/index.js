@@ -17,7 +17,7 @@ export const mutations = {
 export const actions = {
   // Запросить список брендов
   async fetchList({ commit }) {
-    await this.$api.$get("/api/stock/brand/get")
+    await this.$api.$get("/admin-api/stock/brand/get")
       .then(({err, body}) => {
         if (!err) commit("set", ["list", body]);
       })

@@ -69,9 +69,9 @@ export default {
   },
 
   proxy: {
-    "/api": {
+    "/admin-api": {
       target: process.env.BACKEND_URL,
-      pathRewrite: {"/api": "/admin/api/v1"}
+      pathRewrite: {"/admin-api": "/admin/api/v1"}
     }
   },
 

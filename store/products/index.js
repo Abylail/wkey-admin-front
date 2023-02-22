@@ -24,7 +24,7 @@ export const actions = {
 
   // Поиск по продуктам
   async searchProducts({ commit }, {page, query}) {
-    await this.$api.$get("/api/stock/product/get", {params: {page, query}})
+    await this.$api.$get("/admin-api/stock/product/get", {params: {page, query}})
       .then(({err, body}) => {
         if (!err) {
           commit("set", ["list", body.list]);

@@ -36,6 +36,7 @@ export default {
       { title: "Клиенты", description: "" , icon: "",  route: "/clients" },
       { title: "Бренды", description: "" , icon: "",  route: "/brands" },
       { title: "Категории", description: "" , icon: "",  route: "/categories" },
+      { title: "Промоакции", description: "" , icon: "",  route: "/promotions" },
     ]
   }),
   methods: {

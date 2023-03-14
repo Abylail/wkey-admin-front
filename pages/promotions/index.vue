@@ -1,7 +1,7 @@
 <template>
   <div class="promotions">
 
-    <v-card class="promotions__card">
+    <v-card class="promotions__head">
       <v-card-title>
         <span>Промоакции</span>
         <v-spacer/>
@@ -68,6 +68,8 @@ export default {
   margin: 16px;
 
   &__list {
+    display: flex;
+    flex-wrap: wrap;
     margin-top: 16px;
   }
 

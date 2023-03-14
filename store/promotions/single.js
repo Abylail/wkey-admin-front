@@ -1,3 +1,4 @@
+
 export const state = () => ({
   // Промоакция
   info: null,
@@ -25,14 +26,23 @@ export const actions = {
       })
   },
 
-  // Создать
-  async createInfo({ }, info) {
-    await this.$api.$post(`/admin-api/stock/promotion/create`, info)
-      .then(({err, body}) => {
-        if (!err) {
-          this.$toast.success("Промоакция создана")
-        }
+  // Создать (возвращает код акции)
+  createInfo({ }, info) {
+    return new Promise(resolve => {
+      this.$api.$post(`/admin-api/stock/promotion/create`, info)
+        .then(({err, body}) => {
+          if (!err) {
+            this.$toast.success("Промоакция создана");
+            return resolve(body);
+          }
+          resolve(null);
+        })
       })
+  },
+
+  // Загрузить фото
+  async upload({}, {code, lang = "ru", image = {}}) {
+    await this.$api.$put(`/admin-api/stock/promotion/upload`, {code, lang, image})
   },
 
   // Обновить
@@ -43,5 +53,15 @@ export const actions = {
           this.$toast.success("Промоакция обновленна")
         }
       })
+  },
+
+  // Удалить (возвращает успешно ли)
+  delete({}, code) {
+    return new Promise(resolve => {
+      this.$api.$delete(`/admin-api/stock/promotion/delete/${code}`)
+        .then(({err, body}) => {
+          resolve(!err);
+        })
+    })
   },
 }

@@ -15,4 +15,8 @@ button, input {
   pointer-events: none;
 }
 
+.loading-mode {
+  cursor: wait;
+}
+
 @import "./vuetifyOver.scss";

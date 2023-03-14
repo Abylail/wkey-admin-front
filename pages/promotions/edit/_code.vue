@@ -24,6 +24,7 @@
           />
           <vue-editor v-model="promotionInfo.description_ru"/>
           <image-upload
+            v-if="promotionCode"
             label="Картинка (рус)"
             :url="promotionInfo.image_ru"
             @upload="uploadImage({lang: 'ru', image: $event})"
@@ -40,6 +41,7 @@
           />
           <vue-editor v-model="promotionInfo.description_kz"/>
           <image-upload
+            v-if="promotionCode"
             label="Картинка (каз)"
             :url="promotionInfo.image_kz"
             @upload="uploadImage({lang: 'kz', image: $event})"

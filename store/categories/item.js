@@ -18,7 +18,7 @@ export const actions = {
 
   // Запросить данные по 1 категории
   async fetchCategory({ commit }, categoryCode) {
-    await this.$api.$get(`/admin-api/stock/category/get/${categoryCode}`)
+    await this.$api.$get(`/adminpanel/admin-api/stock/category/get/${categoryCode}`)
       .then(({err, body}) => {
         if (!err) commit("set", ["info", body]);
       })
@@ -27,7 +27,7 @@ export const actions = {
   // Сохранить информацию по категории -> возвращает код категории
   addCategoryInfo({ commit }, info) {
     return new Promise(resolve => {
-      this.$api.$post("/admin-api/stock/category/add", info)
+      this.$api.$post("/adminpanel/admin-api/stock/category/add", info)
         .then(({err, body}) => {
           if (!err) resolve(body);
           else resolve(null);
@@ -38,7 +38,7 @@ export const actions = {
   // Сохранить информацию по категории -> возвращает успешно ли
   updateCategoryInfo({ commit }, info) {
     return new Promise(resolve => {
-      this.$api.$put(`/admin-api/stock/category/update/${info.code}`, info)
+      this.$api.$put(`/adminpanel/admin-api/stock/category/update/${info.code}`, info)
         .then(({err}) => {
           resolve(!err);
         })
@@ -48,7 +48,7 @@ export const actions = {
   // Загрузить файл -> возвращает путь к файлу
   imageUpload({ commit }, {code, image}) {
     return new Promise(resolve => {
-      this.$api.$put(`/admin-api/stock/category/upload/${code}`, {image})
+      this.$api.$put(`/adminpanel/admin-api/stock/category/upload/${code}`, {image})
         .then(({err, body}) => {
           if (!err) resolve(body);
           else resolve(null);
@@ -59,7 +59,7 @@ export const actions = {
   // Удалить категорию -> возвращает успешно ли
   deleteCategory({}, categoryCode) {
     return new Promise(resolve => {
-      this.$api.$delete(`/admin-api/stock/category/delete/${categoryCode}`)
+      this.$api.$delete(`/adminpanel/admin-api/stock/category/delete/${categoryCode}`)
         .then(({err}) => {
           resolve(!err);
         })

@@ -48,6 +48,10 @@ export default {
     port: 3001
   },
 
+  router: {
+    base: "/adminpanel",
+  },
+
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
@@ -69,9 +73,9 @@ export default {
   },
 
   proxy: {
-    "/admin-api": {
+    "/adminpanel/admin-api": {
       target: process.env.BACKEND_URL,
-      pathRewrite: {"/admin-api": "/admin/api/v1"}
+      pathRewrite: {"/adminpanel/admin-api": "/admin/api/v1"}
     }
   },
 

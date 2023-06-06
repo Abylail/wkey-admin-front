@@ -18,7 +18,7 @@ export const actions = {
   // Получить информацию о бренде
   async fetchBrandInfo({ state, commit }, {brandId, hard = false}) {
     if (!hard && state.info?.id === brandId) return;
-    await this.$api.$get(`/admin-api/stock/brand/get/${brandId}`)
+    await this.$api.$get(`/adminpanel/admin-api/stock/brand/get/${brandId}`)
       .then(({err, body}) => {
         if (!err) commit("set", ["info", body]);
       })
@@ -32,7 +32,7 @@ export const actions = {
   // Залить фотку бренда (file -> {name, buffer<base64>}) -> возвращает успешно ли
   async uploadImage({}, {brandId, file}) {
     return new Promise(resolve => {
-    this.$api.$put(`/admin-api/stock/brand/upload/${brandId}`, {image: file})
+    this.$api.$put(`/adminpanel/admin-api/stock/brand/upload/${brandId}`, {image: file})
       .then(({err, body}) => {
         resolve(!err);
       })

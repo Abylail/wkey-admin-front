@@ -18,7 +18,7 @@ export const mutations = {
 export const actions = {
   // Запросить информацию
   async fetchInfo({ commit }, code) {
-    await this.$api.$get(`/admin-api/stock/promotion/get/${code}`)
+    await this.$api.$get(`/adminpanel/admin-api/stock/promotion/get/${code}`)
       .then(({err, body}) => {
         if (!err) {
           commit("set", ["info", body]);
@@ -29,7 +29,7 @@ export const actions = {
   // Создать (возвращает код акции)
   createInfo({ }, info) {
     return new Promise(resolve => {
-      this.$api.$post(`/admin-api/stock/promotion/create`, info)
+      this.$api.$post(`/adminpanel/admin-api/stock/promotion/create`, info)
         .then(({err, body}) => {
           if (!err) {
             this.$toast.success("Промоакция создана");
@@ -42,12 +42,12 @@ export const actions = {
 
   // Загрузить фото
   async upload({}, {code, lang = "ru", image = {}}) {
-    await this.$api.$put(`/admin-api/stock/promotion/upload`, {code, lang, image})
+    await this.$api.$put(`/adminpanel/admin-api/stock/promotion/upload`, {code, lang, image})
   },
 
   // Обновить
   async updateInfo({ }, info) {
-    await this.$api.$put(`/admin-api/stock/promotion/update`, info)
+    await this.$api.$put(`/adminpanel/admin-api/stock/promotion/update`, info)
       .then(({err, body}) => {
         if (!err) {
           this.$toast.success("Промоакция обновленна")
@@ -58,7 +58,7 @@ export const actions = {
   // Удалить (возвращает успешно ли)
   delete({}, code) {
     return new Promise(resolve => {
-      this.$api.$delete(`/admin-api/stock/promotion/delete/${code}`)
+      this.$api.$delete(`/adminpanel/admin-api/stock/promotion/delete/${code}`)
         .then(({err, body}) => {
           resolve(!err);
         })

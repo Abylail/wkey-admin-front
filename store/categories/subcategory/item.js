@@ -18,7 +18,7 @@ export const actions = {
 
   // Запросить данные по 1 категории
   async fetchSubcategory({ commit }, {categoryCode, subcategoryCode}) {
-    await this.$api.$get(`/admin-api/stock/category/${categoryCode}/sub/get/${subcategoryCode}`)
+    await this.$api.$get(`/adminpanel/admin-api/stock/category/${categoryCode}/sub/get/${subcategoryCode}`)
       .then(({err, body}) => {
         if (!err) commit("set", ["info", body]);
       })
@@ -27,7 +27,7 @@ export const actions = {
   // Сохранить информацию по категории -> возвращает код категории
   addCategoryInfo({ commit }, {categoryCode, info}) {
     return new Promise(resolve => {
-      this.$api.$post(`/admin-api/stock/category/${categoryCode}/sub/add`, info)
+      this.$api.$post(`/adminpanel/admin-api/stock/category/${categoryCode}/sub/add`, info)
         .then(({err, body}) => {
           if (!err) resolve(body);
           else resolve(null);
@@ -38,7 +38,7 @@ export const actions = {
   // Сохранить информацию по категории -> возвращает успешно ли
   updateCategoryInfo({ commit }, {categoryCode, info}) {
     return new Promise(resolve => {
-      this.$api.$put(`/admin-api/stock/category/${categoryCode}/sub/update/${info.code}`, info)
+      this.$api.$put(`/adminpanel/admin-api/stock/category/${categoryCode}/sub/update/${info.code}`, info)
         .then(({err}) => {
           resolve(!err);
         })
@@ -48,7 +48,7 @@ export const actions = {
   // Загрузить файл -> возвращает путь к файлу
   imageUpload({ commit }, {categoryCode, subcategoryCode, image}) {
     return new Promise(resolve => {
-      this.$api.$put(`/admin-api/stock/category/${categoryCode}/sub/upload/${subcategoryCode}`, {image})
+      this.$api.$put(`/adminpanel/admin-api/stock/category/${categoryCode}/sub/upload/${subcategoryCode}`, {image})
         .then(({err, body}) => {
           if (!err) resolve(body);
           else resolve(null);
@@ -59,7 +59,7 @@ export const actions = {
   // Удалить категорию -> возвращает успешно ли
   deleteSubcategory({}, {categoryCode, subcategoryCode}) {
     return new Promise(resolve => {
-      this.$api.$delete(`/admin-api/stock/category/${categoryCode}/sub/delete/${subcategoryCode}`)
+      this.$api.$delete(`/adminpanel/admin-api/stock/category/${categoryCode}/sub/delete/${subcategoryCode}`)
         .then(({err}) => {
           resolve(!err);
         })
@@ -69,7 +69,7 @@ export const actions = {
   // Привязать продукты к подкатегории
   bindProducts({}, {categoryCode, subcategoryCode, productIds}) {
     return new Promise(resolve => {
-      this.$api.$post(`/admin-api/stock/category/${categoryCode}/sub/bind/${subcategoryCode}`, {list: productIds})
+      this.$api.$post(`/adminpanel/admin-api/stock/category/${categoryCode}/sub/bind/${subcategoryCode}`, {list: productIds})
         .then(({err}) => {
           resolve(!err);
         })
@@ -79,7 +79,7 @@ export const actions = {
   // Отвязать продукты к подкатегории
   unbindProducts({}, {categoryCode, subcategoryCode, productId}) {
     return new Promise(resolve => {
-      this.$api.$post(`/admin-api/stock/category/${categoryCode}/sub/unbind/${subcategoryCode}/product/${productId}`)
+      this.$api.$post(`/adminpanel/admin-api/stock/category/${categoryCode}/sub/unbind/${subcategoryCode}/product/${productId}`)
         .then(({err}) => {
           resolve(!err);
         })
